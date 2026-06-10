@@ -1,5 +1,7 @@
 package com.projeto.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.projeto.entity.Categoria;
 import com.projeto.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +12,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categorias")
+@Tag(
+        name = "Categorias",
+        description = "Gerenciamento das categorias"
+)
 
 public class CategoriaController {
 
     @Autowired
     private CategoriaService categoriaService;
 
+    @Operation(summary = "Cadastrar categoria")
     // CRIAR
     @PostMapping
     public ResponseEntity<Categoria> salvar(
@@ -26,6 +33,7 @@ public class CategoriaController {
         );
     }
 
+    @Operation(summary = "Listar categorias")
     // LISTAR TODAS
     @GetMapping
     public ResponseEntity<List<Categoria>> listarTodos() {
@@ -35,6 +43,7 @@ public class CategoriaController {
         );
     }
 
+    @Operation(summary = "Buscar categoria por ID")
     // BUSCAR POR ID
     @GetMapping("/{id}")
     public ResponseEntity<Categoria> buscarPorId(
@@ -51,6 +60,7 @@ public class CategoriaController {
         return ResponseEntity.ok(categoria);
     }
 
+    @Operation(summary = "Atualizar categoria")
     // PUT atualiza
     @PutMapping("/{id}")
     public Categoria atualizar(@PathVariable Long id,
@@ -59,6 +69,7 @@ public class CategoriaController {
         return categoriaService.atualizar(id, categoria);
     }
 
+    @Operation(summary = "Excluir categoria")
     // DELETAR
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(

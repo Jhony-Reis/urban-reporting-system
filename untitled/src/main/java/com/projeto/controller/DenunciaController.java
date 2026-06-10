@@ -9,15 +9,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/denuncias")
+@Tag(
+        name = "Denúncias",
+        description = "Operações relacionadas às denúncias urbanas"
+)
 
 public class DenunciaController {
 
     @Autowired
     private DenunciaService denunciaService;
 
+    @Operation(summary = "Cadastrar denúncia")
     // CRIAR DENUNCIA
     @PostMapping
     public ResponseEntity<Denuncia> salvar(
@@ -28,6 +35,7 @@ public class DenunciaController {
         );
     }
 
+    @Operation(summary = "Listar denúncias")
     // LISTAR TODAS
     @GetMapping
     public ResponseEntity<List<Denuncia>> listarTodos() {
@@ -37,6 +45,7 @@ public class DenunciaController {
         );
     }
 
+    @Operation(summary = "Buscar denúncia por ID")
     // BUSCAR POR ID
     @GetMapping("/{id}")
     public ResponseEntity<Denuncia> buscarPorId(
@@ -53,6 +62,7 @@ public class DenunciaController {
         return ResponseEntity.ok(denuncia);
     }
 
+    @Operation(summary = "Buscar denúncias por bairro")
     // BUSCAR POR BAIRRO
     @GetMapping("/bairro/{bairro}")
     public ResponseEntity<List<Denuncia>>
@@ -63,6 +73,7 @@ public class DenunciaController {
         );
     }
 
+    @Operation(summary = "Buscar denúncias por status")
     // BUSCAR POR STATUS
     @GetMapping("/status/{status}")
     public ResponseEntity<List<Denuncia>>
@@ -74,6 +85,7 @@ public class DenunciaController {
         );
     }
 
+    @Operation(summary = "Buscar denúncias por prioridade")
     // BUSCAR POR PRIORIDADE
     @GetMapping("/prioridade/{prioridade}")
     public ResponseEntity<List<Denuncia>>
@@ -86,7 +98,7 @@ public class DenunciaController {
         );
     }
 
-
+    @Operation(summary = "Atualizar denúncia")
     //PUT
     @PutMapping("/{id}")
     public Denuncia atualizar(@PathVariable Long id,
@@ -95,6 +107,7 @@ public class DenunciaController {
         return denunciaService.atualizar(id, denuncia);
     }
 
+    @Operation(summary = "Excluir denúncia")
     // DELETAR
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(

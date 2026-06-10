@@ -7,15 +7,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/evidencias")
+@Tag(
+        name = "Evidências",
+        description = "Gerenciamento das evidências"
+)
 
 public class EvidenciaController {
 
     @Autowired
     private EvidenciaService evidenciaService;
 
+    @Operation(summary = "Cadastrar evidência")
     // CRIAR
     @PostMapping
     public ResponseEntity<Evidencia> salvar(
@@ -26,6 +33,7 @@ public class EvidenciaController {
         );
     }
 
+    @Operation(summary = "Listar evidências")
     // LISTAR TODAS
     @GetMapping
     public ResponseEntity<List<Evidencia>> listarTodos() {
@@ -35,6 +43,7 @@ public class EvidenciaController {
         );
     }
 
+    @Operation(summary = "Buscar evidência por ID")
     // BUSCAR POR ID
     @GetMapping("/{id}")
     public ResponseEntity<Evidencia> buscarPorId(
@@ -51,6 +60,7 @@ public class EvidenciaController {
         return ResponseEntity.ok(evidencia);
     }
 
+    @Operation(summary = "Atualizar evidência")
     //PUT
     @PutMapping("/{id}")
     public Evidencia atualizar(@PathVariable Long id,
@@ -59,6 +69,7 @@ public class EvidenciaController {
         return evidenciaService.atualizar(id, evidencia);
     }
 
+    @Operation(summary = "Excluir evidência")
     // DELETAR
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(

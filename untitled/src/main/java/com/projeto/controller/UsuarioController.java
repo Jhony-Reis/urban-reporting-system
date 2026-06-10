@@ -6,16 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios")
+
+@Tag(
+        name = "Usuários",
+        description = "Operações relacionadas aos usuários"
+)
 
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
 
+    @Operation(summary = "Cadastrar usuário")
     // CRIAR USUARIO
     @PostMapping
     public ResponseEntity<Usuario> salvar(
@@ -26,6 +35,7 @@ public class UsuarioController {
         );
     }
 
+    @Operation(summary = "Listar usuários")
     // LISTAR TODOS
     @GetMapping
     public ResponseEntity<List<Usuario>> listarTodos() {
@@ -35,6 +45,7 @@ public class UsuarioController {
         );
     }
 
+    @Operation(summary = "Buscar usuário por ID")
     // BUSCAR POR ID
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> buscarPorId(
@@ -51,6 +62,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+    @Operation(summary = "Atualizar usuário")
     // PUT
     @PutMapping("/{id}")
     public Usuario atualizar(@PathVariable Long id,
@@ -59,6 +71,7 @@ public class UsuarioController {
         return usuarioService.atualizar(id, usuario);
     }
 
+    @Operation(summary = "Excluir usuário")
     // DELETAR
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(
